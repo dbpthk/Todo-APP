@@ -2,6 +2,8 @@ import connectDB from "@/lib/db";
 import Todo from "@/model/todo";
 import { Button } from "@base-ui/react";
 import TodoForm from "@/components/todo-form";
+import TodoList from "@/components/todo-list";
+import TodoFilter from "@/components/todo-filter";
 
 export default async function Home() {
   const connection = await connectDB();
@@ -18,6 +20,8 @@ export default async function Home() {
         </header>
         <main>
           <TodoForm />
+          <TodoFilter />
+          <TodoList />
         </main>
       </div>
       <footer className="text-center py-4 text-sm text-muted-foreground">
