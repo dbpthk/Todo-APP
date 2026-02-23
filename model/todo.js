@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const TodoSchema = new mongoose.Schema(
   {
@@ -28,3 +28,5 @@ const TodoSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+export default mongoose.models.Todo || mongoose.model("Todo", TodoSchema);
