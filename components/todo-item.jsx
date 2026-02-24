@@ -6,12 +6,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Trash2 } from "lucide-react";
 import { Calendar } from "lucide-react";
-import { useToggleTodo } from "@/hooks/use-create-todo";
+import { useDeleteTodo, useToggleTodo } from "@/hooks/use-create-todo";
 import { toast } from "sonner";
 
 const TodoItem = ({ todo }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const toggleMutation = useToggleTodo();
+  const deleteMutation = useDeleteTodo();
 
   const handleToggle = async () => {
     try {
@@ -22,6 +23,17 @@ const TodoItem = ({ todo }) => {
       }
     } catch (error) {
       toast.error("failed to update");
+    }
+  };
+  const handleDelete = async () => {
+    try {
+      const result = await deleteMutation.mutateAsync(todo._id);
+      toast.success("Todo deleted successfully");
+      if (!result.success) {
+        toast.error("Error deleting ", error);
+      }
+    } catch (error) {
+      toast.error("failed to delete");
     }
   };
 
@@ -72,7 +84,12 @@ const TodoItem = ({ todo }) => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" className="p-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="p-1"
+            onClick={handleDelete}
+          >
             <Trash2 className="w-4 h-4" />
           </Button>
         </div>

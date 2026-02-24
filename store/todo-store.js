@@ -20,6 +20,10 @@ export const useTodoStore = create(
             todo._id === id ? { ...todo, ...updates } : todo,
           ),
         })),
+      deleteTodo: (id) =>
+        set((state) => ({
+          todos: state.todos.filter((todo) => todo._id !== id),
+        })),
 
       setFilter: (filter) => set({ filter }),
       setLoading: (isLoading) => set({ isLoading }),
