@@ -8,6 +8,7 @@ import { Trash2 } from "lucide-react";
 import { Calendar } from "lucide-react";
 import { useDeleteTodo, useToggleTodo } from "@/hooks/use-create-todo";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 const TodoItem = ({ todo }) => {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -56,8 +57,12 @@ const TodoItem = ({ todo }) => {
       <CardContent className="p-4 flex items-start gap-4">
         <Checkbox
           checked={todo.completed}
-          className="mt-1"
-          disabled={false}
+          className={cn(
+            "h-8 w-8 p-0",
+            deleteMutation.isPending &&
+              "bg-destructive text-destructive-foreground",
+          )}
+          disabled={deleteMutation.isPending}
           onCheckedChange={handleToggle}
         />
 
@@ -85,12 +90,11 @@ const TodoItem = ({ todo }) => {
         </div>
         <div className="flex items-center gap-2">
           <Button
-            variant="ghost"
-            size="sm"
-            className="p-1"
+            variant="destructive"
+            className="rounded-md p-3 hover:bg-destructive/90 hover:text-white"
             onClick={handleDelete}
           >
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className=" w-6 h-6 " />
           </Button>
         </div>
       </CardContent>
