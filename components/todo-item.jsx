@@ -6,9 +6,24 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Trash2 } from "lucide-react";
 import { Calendar } from "lucide-react";
+import { useToggleTodo } from "@/hooks/use-create-todo";
+import { toast } from "sonner";
 
 const TodoItem = ({ todo }) => {
   const [isDeleting, setIsDeleting] = useState(false);
+  const toggleMutation = useToggleTodo();
+
+  const handleToggle = async () => {
+    try {
+      const result = await toggleMutation.mutateAsync(todo._id);
+      toast.success("Todo updated successfully");
+      if (!result.success) {
+        toast.error("Error", result.error);
+      }
+    } catch (error) {
+      toast.error("failed to update");
+    }
+  };
 
   const getPriorityColor = (priority) => {
     switch (priority) {
@@ -31,7 +46,7 @@ const TodoItem = ({ todo }) => {
           checked={todo.completed}
           className="mt-1"
           disabled={false}
-          onCheckedChange={() => {}}
+          onCheckedChange={handleToggle}
         />
 
         <div className="flex-1">

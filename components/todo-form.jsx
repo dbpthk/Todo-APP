@@ -43,10 +43,10 @@ const TodoForm = () => {
         toast.error(result.error);
       }
     } catch (error) {
-      toast.error("failed to create todos");
+      console.log(error);
+      toast.error("Faield to create todo");
     }
   };
-
   if (!isOpen) {
     return (
       <Button
